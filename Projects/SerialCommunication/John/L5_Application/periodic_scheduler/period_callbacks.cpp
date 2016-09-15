@@ -48,6 +48,9 @@ const uint32_t PERIOD_DISPATCHER_TASK_STACK_SIZE_BYTES = (512 * 3);
 /// Called once before the RTOS is started, this is a good place to initialize things once
 bool period_init(void)
 {
+    Uart2 U2& = Uart2.getInstance();
+    U2.init(9600, 32, 64);
+
     return true; // Must return true upon success
 }
 
@@ -66,6 +69,7 @@ void period_1Hz(void)
 
 void period_10Hz(void)
 {
+
 }
 
 void period_100Hz(void)
@@ -74,4 +78,7 @@ void period_100Hz(void)
 
 void period_1000Hz(void)
 {
+    static float temp = 0.0;
+    temp = TS.getFarenheit();
+    U2.putChar((int8_t)temp);
 }
