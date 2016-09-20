@@ -56,12 +56,12 @@ bool uart_task::run(void *p)
     //temp = TS.getFarenheit();
     U2->putChar(angle);
     char c = 0;
-    bool uart;
-    uart = U3->getChar(&c, 1000);
-    if(uart){
+    bool success;
+    success = U3->getChar(&c, 1000);
+    if(success){
         printf("%c\n", c);
         LE.toggle(3);
-        LD.setNumber(c);
+        LD.setNumber(angle);
     }
 
     return true;
