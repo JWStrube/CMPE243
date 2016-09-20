@@ -15,18 +15,19 @@
  *     You can reach the author of this software at :
  *          p r e e t . w i k i @ g m a i l . c o m
  */
- 
+
  /**
  * @file
  * @brief Contains FreeRTOS task examples.
  */
- 
+
 #ifndef EXAMPLES_HPP_
 #define EXAMPLES_HPP_
 
 #include "scheduler_task.hpp"
 #include "shared_handles.h"
 #include "uart3.hpp"
+#include "uart2.hpp"
 #include "rn_xv_task.hpp"
 #include "FreeRTOS.h"
 #include "semphr.h"
@@ -37,6 +38,14 @@
  * This is the simplest example of a task.  It just computes some work
  * periodically and prints status out.
  */
+
+class uart_task : public scheduler_task
+{
+    public:
+        uart_task();
+        bool run(void *p);
+};
+
 class example_task : public scheduler_task
 {
     public:

@@ -23,8 +23,12 @@
  * 			@see L0_LowLevel/lpc_sys.h if you wish to override printf/scanf functions.
  *
  */
+#include "scheduler_task.hpp"
 #include "tasks.hpp"
 #include "examples/examples.hpp"
+#include "gpio.hpp"
+#include "eint.h"
+#include "io.hpp"
 
 /**
  * The main() creates tasks or "threads".  See the documentation of scheduler_task class at scheduler_task.hpp
@@ -39,9 +43,18 @@
  *      - If FreeRTOS is running, then wireless task may use it.
  *        In either case, you should avoid using this bus or interfacing to external components because
  *        there is no semaphore configured for this bus and it should be used exclusively by nordic wireless.
+ *
  */
 int main(void)
 {
+    Uart2 *U2;
+    Uart3 *U3;
+    U2 = &(Uart2::getInstance());
+    U2->init(9800   , 1, 1);
+    U3 = &(Uart3::getInstance());
+    U3->init(9800, 1, 1);
+    U2->flush();
+    U3->flush();
     /**
      * A few basic tasks for this bare-bone system :
      *      1.  Terminal task provides gateway to interact with the board through UART terminal.
@@ -58,7 +71,7 @@ int main(void)
     scheduler_add_task(new wirelessTask(PRIORITY_CRITICAL));
 
     /* Change "#if 0" to "#if 1" to run period tasks; @see period_callbacks.cpp */
-    #if 1
+    #if 0
     scheduler_add_task(new periodicSchedulerTask());
     #endif
 
@@ -82,7 +95,7 @@ int main(void)
      * Try these examples one at a time.
      */
     #if 1
-        scheduler_add_task(new example_task());
+        scheduler_add_task(new uart_task());
         // scheduler_add_task(new example_alarm());
         // scheduler_add_task(new example_logger_qset());
         // scheduler_add_task(new example_nv_vars());

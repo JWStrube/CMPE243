@@ -27,9 +27,45 @@
 #include "io.hpp"
 #include "wireless.h"
 #include "uart0.hpp"
+#include "uart2.hpp"
+#include "uart3.hpp"
+#include <math.h>
 
 
 
+uart_task::uart_task() :
+    scheduler_task("uart", 3 * 512, PRIORITY_HIGH)
+{
+    setRunDuration(100);
+}
+
+
+
+bool uart_task::run(void *p)
+{
+
+    Uart2 *U2;
+    Uart3 *U3;
+    U2 = &(Uart2::getInstance());
+    U3 = &(Uart3::getInstance());
+    int16_t accelX = AS.getX();
+    int16_t accelY = AS.getY();
+    int8_t angle = atan(accelX/accelY) * 180 / 3.14;
+    //LE.toggle(1);
+   // float temp = 0.0;
+    //temp = TS.getFarenheit();
+    U2->putChar(angle);
+    char c = 0;
+    bool uart;
+    uart = U3->getChar(&c, 1000);
+    if(uart){
+        printf("%c\n", c);
+        LE.toggle(3);
+        LD.setNumber(c);
+    }
+
+    return true;
+}
 example_task::example_task() :
     scheduler_task("ex_simple", 3 * 512, PRIORITY_HIGH)
 {

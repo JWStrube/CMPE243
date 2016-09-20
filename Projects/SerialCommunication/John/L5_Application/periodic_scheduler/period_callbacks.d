@@ -14,7 +14,10 @@ L5_Application/periodic_scheduler/period_callbacks.o: \
  L0_LowLevel/LPC17xx.h L4_IO/IR_sensor.hpp L4_IO/LED_Display.hpp \
  L4_IO/LED.hpp L4_IO/light_sensor.hpp L4_IO/switches.hpp \
  L4_IO/temperature_sensor.hpp \
- L5_Application/periodic_scheduler/periodic_callback.h
+ L5_Application/periodic_scheduler/periodic_callback.h \
+ L2_Drivers/uart2.hpp L2_Drivers/base/uart_dev.hpp \
+ L1_FreeRTOS/include/queue.h L2_Drivers/base/char_dev.hpp \
+ L2_Drivers/uart3.hpp
 
 L4_IO/io.hpp:
 
@@ -79,3 +82,13 @@ L4_IO/switches.hpp:
 L4_IO/temperature_sensor.hpp:
 
 L5_Application/periodic_scheduler/periodic_callback.h:
+
+L2_Drivers/uart2.hpp:
+
+L2_Drivers/base/uart_dev.hpp:
+
+L1_FreeRTOS/include/queue.h:
+
+L2_Drivers/base/char_dev.hpp:
+
+L2_Drivers/uart3.hpp:
